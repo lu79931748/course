@@ -21,9 +21,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/my_course?serverTimezone=UTC"
+                        connectionURL="jdbc:mysql://localhost:3306/my_course"
                         userId="root"
-                        password="root">
+                        password="wenfeilu">
         </jdbcConnection>
 
         <!-- domain类的位置 -->
