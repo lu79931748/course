@@ -7,7 +7,7 @@
             <div class="center">
               <h1>
                 <i class="ace-icon fa fa-leaf green"></i>
-                <span class="">控台登录</span>
+                <span class="">控制台登录</span>
               </h1>
             </div>
 
