@@ -974,7 +974,11 @@
 
 <script>
 export default {
-  name: "Chapter"
+  name: 'chapter',
+  mounted: function (){
+    this.$parent.activeSidebar("business-chapter-sidebar");
+  },
+  methods: {}
 }
 </script>
 

@@ -354,7 +354,7 @@
         </div><!-- /.sidebar-shortcuts -->
 
         <ul class="nav nav-list">
-          <li class="">
+          <li class="" id="welcome-sidebar">
             <a href="index.html">
               <i class="menu-icon fa fa-tachometer"></i>
               <span class="menu-text"> 欢迎 </span>
@@ -363,7 +363,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="active open">
+          <li class="">
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-list"></i>
               <span class="menu-text"> 系统管理 </span>
@@ -393,6 +393,30 @@
               </li>
             </ul>
           </li>
+
+          <li class="active open">
+            <a href="#" class="dropdown-toggle">
+              <i class="menu-icon fa fa-list"></i>
+              <span class="menu-text"> 业务管理 </span>
+
+              <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+              <li class="active" id="business-chapter-sidebar">
+                <a href="tables.html">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  大章管理
+                </a>
+
+                <b class="arrow"></b>
+              </li>
+
+            </ul>
+          </li>
+
         </ul><!-- /.nav-list -->
 
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
@@ -457,6 +481,21 @@
     methods: {
       login(){
         this.$router.push("/admin")
+      },
+
+      //登录激活样式
+      activeSidebar: function (id){
+        //兄弟菜单去掉active样式，自身增加active样式
+        $("#"+ id).siblings().removeClass("active")
+        $("#"+ id).siblings().find("li").removeClass("active")
+        $("#"+ id).siblings().addClass("active")
+
+        //如果有父菜单，父菜单的兄弟惨淡去掉open active，父菜单增加open active
+        let parent = $("#" + id).parents("li");
+        if(parent){
+          parent.siblings().removeClass("open active")
+          parent.addClass("open active")
+        }
       }
     }
   }
