@@ -10,7 +10,8 @@
 export default {
   name: 'welcome',
   mounted: function (){
-    this.$parent.activeSidebar("welcom-sidebar");
+    console.log("走了")
+    this.$parent.activeSidebar("welcome-sidebar");
   },
   methods: {}
 }

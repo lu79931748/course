@@ -486,15 +486,15 @@
       //登录激活样式
       activeSidebar: function (id){
         //兄弟菜单去掉active样式，自身增加active样式
-        $("#"+ id).siblings().removeClass("active")
-        $("#"+ id).siblings().find("li").removeClass("active")
-        $("#"+ id).siblings().addClass("active")
+        $("#"+ id).siblings().removeClass("active");
+        $("#"+ id).siblings().find("li").removeClass("active");
+        $("#"+ id).siblings().addClass("active");
 
         //如果有父菜单，父菜单的兄弟惨淡去掉open active，父菜单增加open active
         let parent = $("#" + id).parents("li");
         if(parent){
-          parent.siblings().removeClass("open active")
-          parent.addClass("open active")
+          parent.siblings().removeClass("open active");
+          parent.addClass("open active");
         }
       }
     }
