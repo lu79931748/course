@@ -5,12 +5,10 @@
     </h1>
   </div>
 </template>
-
 <script>
 export default {
-  name: 'welcome',
+  name: "welcome",
   mounted: function (){
-    console.log("走了")
     this.$parent.activeSidebar("welcome-sidebar");
   },
   methods: {}

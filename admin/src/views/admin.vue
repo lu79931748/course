@@ -320,7 +320,6 @@
     </div>
 
     <div class="main-container ace-save-state" id="main-container">
-
       <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
 
         <div class="sidebar-shortcuts" id="sidebar-shortcuts">
@@ -355,10 +354,10 @@
 
         <ul class="nav nav-list">
           <li class="" id="welcome-sidebar">
-            <a href="index.html">
+            <router-link to="/admin/welcome">
               <i class="menu-icon fa fa-tachometer"></i>
               <span class="menu-text"> 欢迎 </span>
-            </a>
+            </router-link>
 
             <b class="arrow"></b>
           </li>
@@ -406,10 +405,10 @@
 
             <ul class="submenu">
               <li class="active" id="business-chapter-sidebar">
-                <a href="tables.html">
+                <router-link to="/admin/business/chapter">
                   <i class="menu-icon fa fa-caret-right"></i>
                   大章管理
-                </a>
+                </router-link>
 
                 <b class="arrow"></b>
               </li>
@@ -426,7 +425,7 @@
 
       <div class="main-content">
         <div class="main-content-inner">
-          <div class="pafge-content">
+          <div class="page-content">
             <div class="row">
               <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
@@ -443,7 +442,7 @@
           <div class="footer-content">
 						<span class="bigger-120">
 							<span class="blue bolder">陆文飞</span>
-							在线视频课程 &copy; 2013-2020
+							在线视频课程 &copy; 2020-2099
 						</span>
 
             &nbsp; &nbsp;
@@ -472,31 +471,35 @@
 </template>
 
 <script>
-  export default {
-    name: 'admin',
-    mounted: function (){
-      $('body').removeClass('class', 'login-layout light-login');
-      $('body').attr('class', 'no-skin');
+export default {
+  name: "admin",
+  mounted: function() {
+    $("body").removeClass("login-layout light-login");
+    $("body").attr("class", "no-skin");
+    // console.log("admin");
+  },
+  methods: {
+    login () {
+      this.$router.push("/admin")
     },
-    methods: {
-      login(){
-        this.$router.push("/admin")
-      },
 
-      //登录激活样式
-      activeSidebar: function (id){
-        //兄弟菜单去掉active样式，自身增加active样式
-        $("#"+ id).siblings().removeClass("active");
-        $("#"+ id).siblings().find("li").removeClass("active");
-        $("#"+ id).siblings().addClass("active");
+    /**
+     * 菜单激活样式，id是当前点击的菜单的id
+     * @param id
+     */
+    activeSidebar: function (id) {
+      // 兄弟菜单去掉active样式，自身增加active样式
+      $("#" + id).siblings().removeClass("active");
+      $("#" + id).siblings().find("li").removeClass("active");
+      $("#" + id).addClass("active");
 
-        //如果有父菜单，父菜单的兄弟惨淡去掉open active，父菜单增加open active
-        let parent = $("#" + id).parents("li");
-        if(parent){
-          parent.siblings().removeClass("open active");
-          parent.addClass("open active");
-        }
+      // 如果有父菜单，父菜单的兄弟菜单去掉open active，父菜单增加open active
+      let parentLi = $("#" + id).parents("li");
+      if (parentLi) {
+        parentLi.siblings().removeClass("open active");
+        parentLi.addClass("open active");
       }
     }
   }
+}
 </script>
