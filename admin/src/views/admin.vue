@@ -478,7 +478,7 @@ export default {
     $("body").removeClass("login-layout light-login");
     $("body").attr("class", "no-skin");
     // console.log("admin");
-    _this.activeSidebar(_this.router.name.replace("/", "-") + "-sidebar");
+    _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
   },
   watch: {
     $route: {
@@ -486,7 +486,7 @@ export default {
         console.log("页面跳转", val, oldVal)
         let _this = this;
         _this.$nextTick(function (){//页面加载完成后执行
-          _this.activeSidebar(_this.router.name.replace("/", "-") + "-sidebar");
+          _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
         })
       }
     }
