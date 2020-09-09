@@ -29,11 +29,7 @@
         <td>{{ chapter.courseId }}</td>
         <td>
           <div class="hidden-sm hidden-xs btn-group">
-            <button class="btn btn-xs btn-success">
-              <i class="ace-icon fa fa-check bigger-120"></i>
-            </button>
-
-            <button class="btn btn-xs btn-info">
+            <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
               <i class="ace-icon fa fa-pencil bigger-120"></i>
             </button>
 
@@ -41,43 +37,6 @@
               <i class="ace-icon fa fa-trash-o bigger-120"></i>
             </button>
 
-            <button class="btn btn-xs btn-warning">
-              <i class="ace-icon fa fa-flag bigger-120"></i>
-            </button>
-          </div>
-
-          <div class="hidden-md hidden-lg">
-            <div class="inline pos-rel">
-              <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-              </button>
-
-              <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                <li>
-                  <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-                                        <span class="blue">
-                                          <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                        </span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-                                        <span class="green">
-                                          <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                        </span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                        <span class="red">
-                                          <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                        </span>
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
         </td>
       </tr>
@@ -135,6 +94,12 @@ export default {
   methods: {
     add(){
       let _this = this;
+      _this.chapter = {}//防止带入上次编辑的数据
+      $("#form-modal").modal("show");
+    },
+    edit(chapter){
+      let _this = this;
+      _this.chapter = $.extend({}, chapter)//复制一份chapter，防止因为数据绑定给行中的数据赋值
       $("#form-modal").modal("show");
     },
     list(page) {
