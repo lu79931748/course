@@ -33,7 +33,7 @@
               <i class="ace-icon fa fa-pencil bigger-120"></i>
             </button>
 
-            <button class="btn btn-xs btn-danger">
+            <button v-on:click="del(chapter)" class="btn btn-xs btn-danger">
               <i class="ace-icon fa fa-trash-o bigger-120"></i>
             </button>
 
@@ -121,6 +121,18 @@ export default {
       ).then((response) => {
         let resp = response.data;
         console.log("保存大章列表结果：", response);
+        if(resp.success){
+          $("#form-modal").modal("hide");
+          _this.list(1);
+        }
+      })
+    },
+    del(chapter) {
+      let _this = this;
+      _this.$ajax.delete("http://127.0.0.1:9999/business/admin/chapter/delete/"+chapter.id
+      ).then((response) => {
+        let resp = response.data;
+        console.log("删除大章列表结果：", response);
         if(resp.success){
           $("#form-modal").modal("hide");
           _this.list(1);
