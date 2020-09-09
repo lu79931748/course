@@ -11,7 +11,7 @@
         刷新
       </button>
     </p>
-    <pagination ref="pagination" v-bind:list="list" />
+    <pagination ref="pagination" v-bind:list="list"/>
     <table id="simple-table" class="table  table-bordered table-hover">
       <thead>
       <tr>
@@ -46,7 +46,8 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">表单</h4>
           </div>
           <div class="modal-body">
@@ -77,12 +78,13 @@
 
 <script>
 import Pagination from "@/components/pagination";
+
 export default {
   name: 'chapter',
   components: {Pagination},
   data: function () {
     return {
-      chapter:{},
+      chapter: {},
       chapters: []
     }
   },
@@ -92,12 +94,12 @@ export default {
     _this.list(1);
   },
   methods: {
-    add(){
+    add() {
       let _this = this;
       _this.chapter = {}//防止带入上次编辑的数据
       $("#form-modal").modal("show");
     },
-    edit(chapter){
+    edit(chapter) {
       let _this = this;
       _this.chapter = $.extend({}, chapter)//复制一份chapter，防止因为数据绑定给行中的数据赋值
       $("#form-modal").modal("show");
@@ -116,14 +118,20 @@ export default {
     },
     save() {
       let _this = this;
+      // 保存校验
+      if (!Validator.require(_this.chapter.name, "名称")
+          || !Validator.require(_this.chapter.courseId, "课程ID")
+          || !Validator.length(_this.chapter.courseId, "课程ID", 1, 8)) {
+        return;
+      }
       Loading.show()
       _this.$ajax.post("http://127.0.0.1:9999/business/admin/chapter/save",
-        _this.chapter
+          _this.chapter
       ).then((response) => {
         Loading.hide()
         let resp = response.data;
         console.log("保存大章列表结果：", response);
-        if(resp.success){
+        if (resp.success) {
           $("#form-modal").modal("hide");
           _this.list(1);
           Toast.success("保存成功！")
@@ -134,7 +142,7 @@ export default {
       let _this = this;
       Confirm.show("删除后不可恢复，确认删除？", function () {
         Loading.show()
-        _this.$ajax.delete("http://127.0.0.1:9999/business/admin/chapter/delete/"+chapter.id).then((response)=>{
+        _this.$ajax.delete("http://127.0.0.1:9999/business/admin/chapter/delete/" + chapter.id).then((response) => {
           console.log("删除大章列表结果：", response);
           Loading.hide()
           let resp = response.data;
