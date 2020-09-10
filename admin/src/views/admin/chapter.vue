@@ -94,28 +94,42 @@ export default {
     _this.list(1);
   },
   methods: {
+    /**
+     * 点击【新增】
+     */
     add() {
       let _this = this;
       _this.chapter = {}//防止带入上次编辑的数据
       $("#form-modal").modal("show");
     },
+
+    /**
+     * 点击【编辑】
+     */
     edit(chapter) {
       let _this = this;
       _this.chapter = $.extend({}, chapter)//复制一份chapter，防止因为数据绑定给行中的数据赋值
       $("#form-modal").modal("show");
     },
+
+    /**
+     * 列表查询
+     */
     list(page) {
       let _this = this;
       _this.$ajax.post("http://127.0.0.1:9999/business/admin/chapter/list", {
         page: page,
         size: _this.$refs.pagination.size,
       }).then((response) => {
-        console.log("查询大章列表结果：", response);
         let resp = response.data;
         _this.chapters = resp.content.list;
         _this.$refs.pagination.render(page, resp.content.total);
       })
     },
+
+    /**
+     * 点击【保存】
+     */
     save() {
       let _this = this;
       // 保存校验
@@ -130,7 +144,6 @@ export default {
       ).then((response) => {
         Loading.hide()
         let resp = response.data;
-        console.log("保存大章列表结果：", response);
         if (resp.success) {
           $("#form-modal").modal("hide");
           _this.list(1);
@@ -140,12 +153,15 @@ export default {
         }
       })
     },
+
+    /**
+     * 点击【删除】
+     */
     del(chapter) {
       let _this = this;
       Confirm.show("删除后不可恢复，确认删除？", function () {
         Loading.show()
         _this.$ajax.delete("http://127.0.0.1:9999/business/admin/chapter/delete/" + chapter.id).then((response) => {
-          console.log("删除大章列表结果：", response);
           Loading.hide()
           let resp = response.data;
           if (resp.success) {
