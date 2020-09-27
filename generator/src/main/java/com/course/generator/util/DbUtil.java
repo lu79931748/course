@@ -26,6 +26,7 @@ public class DbUtil {
 
     /**
      * 获得表注释
+     *
      * @param tableName
      * @return
      * @throws Exception
@@ -36,7 +37,7 @@ public class DbUtil {
         ResultSet rs = stmt.executeQuery("select table_comment from information_schema.tables Where table_name = '" + tableName + "'");
         String tableNameCH = "";
         if (rs != null) {
-            while(rs.next()) {
+            while (rs.next()) {
                 tableNameCH = rs.getString("table_comment");
                 break;
             }
@@ -50,6 +51,7 @@ public class DbUtil {
 
     /**
      * 获得所有列信息
+     *
      * @param tableName
      * @return
      * @throws Exception
@@ -60,10 +62,11 @@ public class DbUtil {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("show full columns from `" + tableName + "`");
         if (rs != null) {
-            while(rs.next()) {
+            while (rs.next()) {
                 String columnName = rs.getString("Field");
                 String type = rs.getString("Type");
                 String comment = rs.getString("Comment");
+                String nullAble = rs.getString("Null"); //YES NO
                 Field field = new Field();
                 field.setName(columnName);
                 field.setNameHump(lineToHump(columnName));
@@ -75,6 +78,13 @@ public class DbUtil {
                     field.setNameCn(comment.substring(0, comment.indexOf("|")));
                 } else {
                     field.setNameCn(comment);
+                }
+                field.setNullAble("YES".equals(nullAble));
+                if (type.toUpperCase().contains("varchar".toUpperCase())) {
+                    String lengthStr = type.substring(type.indexOf("(") + 1, type.length() - 1);
+                    field.setLength(Integer.valueOf(lengthStr));
+                } else {
+                    field.setLength(0);
                 }
                 fieldList.add(field);
             }
@@ -89,12 +99,12 @@ public class DbUtil {
     /**
      * 下划线转小驼峰
      */
-    public static String lineToHump(String str){
+    public static String lineToHump(String str) {
         Pattern linePattern = Pattern.compile("_(\\w)");
         str = str.toLowerCase();
         Matcher matcher = linePattern.matcher(str);
         StringBuffer sb = new StringBuffer();
-        while(matcher.find()){
+        while (matcher.find()) {
             matcher.appendReplacement(sb, matcher.group(1).toUpperCase());
         }
         matcher.appendTail(sb);
@@ -104,7 +114,7 @@ public class DbUtil {
     /**
      * 下划线转大驼峰
      */
-    public static String lineToBigHump(String str){
+    public static String lineToBigHump(String str) {
         String s = lineToHump(str);
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
