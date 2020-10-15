@@ -1,10 +1,8 @@
 package com.course.business.controller.admin;
 
-import com.course.server.domain.Category;
 import com.course.server.dto.CategoryDto;
 import com.course.server.dto.PageDto;
 import com.course.server.dto.ResponseDto;
-import com.course.server.exception.ValidatorException;
 import com.course.server.service.CategoryService;
 import com.course.server.util.ValidatorUtil;
 import org.slf4j.Logger;
@@ -23,6 +21,18 @@ public class CategoryController {
 
     @Resource
     private CategoryService categoryService;
+
+    /**
+     * 列表查询
+     */
+    @PostMapping("/all")
+    public ResponseDto all() {
+        ResponseDto responseDto = new ResponseDto();
+        List<CategoryDto> categoryDtoList = categoryService.all();
+        responseDto.setContent(categoryDtoList);
+        return responseDto;
+    }
+
 
     /**
      * 列表查询
