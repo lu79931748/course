@@ -73,7 +73,7 @@ create table course (
 INSERT INTO course (id, name, summary, time, price, image, level, charge, status, enroll, sort, created_at, updated_at)
 VALUES ('00000001', '测试课程01', '这是一门测试课程', 7200, 19.9, '', 0, 'C', 'D', 100, 0, now(), now());
 
-update course c set `time` = (select sum(`time`) from `section` where course_id = '00000001') where c.id = '00000001'
+update course c set `time` = (select sum(`time`) from `section` where course_id = '00000001') where c.id = '00000001';
 
 -- 分类
 drop table if exists `category`;
@@ -140,3 +140,12 @@ create table `course_category` (
   `category_id` char(8) comment '分类|course.id',
   primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='课程分类';
+
+# 课程内容
+drop table if exists `course_content`;
+create table `course_content` (
+  `id` char(8) not null default '' comment '课程id',
+  `content` mediumtext not null comment '课程内容',
+  primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='课程内容';
+
