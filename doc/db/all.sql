@@ -75,6 +75,7 @@ VALUES ('00000001', '测试课程01', '这是一门测试课程', 7200, 19.9, ''
 
 update course c set `time` = (select sum(`time`) from `section` where course_id = '00000001') where c.id = '00000001';
 
+alter table `course` add column (`teacher_id` char(8) comment '讲师|teacher.id');
 -- 分类
 drop table if exists `category`;
 create table `category` (
