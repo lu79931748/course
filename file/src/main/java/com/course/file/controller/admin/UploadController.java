@@ -1,4 +1,4 @@
-package com.course.controller;
+package com.course.file.controller.admin;
 
 import com.course.server.dto.ResponseDto;
 import com.course.server.util.UuidUtil;
