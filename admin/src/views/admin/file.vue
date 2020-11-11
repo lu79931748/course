@@ -1,11 +1,6 @@
 <template>
   <div>
     <p>
-      <button v-on:click="add()" class="btn btn-white btn-default btn-round">
-        <i class="ace-icon fa fa-edit"></i>
-        新增
-      </button>
-      &nbsp;
       <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
         <i class="ace-icon fa fa-refresh"></i>
         刷新
@@ -23,7 +18,6 @@
         <th>后缀</th>
         <th>大小</th>
         <th>用途</th>
-        <th>操作</th>
       </tr>
       </thead>
 
@@ -33,18 +27,8 @@
         <td>{{file.path}}</td>
         <td>{{file.name}}</td>
         <td>{{file.suffix}}</td>
-        <td>{{file.size}}</td>
+        <td>{{file.size | formatFileSize}}</td>
         <td>{{FILE_USE | optionKV(file.use)}}</td>
-      <td>
-        <div class="hidden-sm hidden-xs btn-group">
-          <button v-on:click="edit(file)" class="btn btn-xs btn-info">
-            <i class="ace-icon fa fa-pencil bigger-120"></i>
-          </button>
-          <button v-on:click="del(file.id)" class="btn btn-xs btn-danger">
-            <i class="ace-icon fa fa-trash-o bigger-120"></i>
-          </button>
-        </div>
-      </td>
       </tr>
       </tbody>
     </table>
