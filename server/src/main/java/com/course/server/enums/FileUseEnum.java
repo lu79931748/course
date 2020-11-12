@@ -5,8 +5,8 @@ package com.course.server.enums;
  */
 public enum FileUseEnum {
 
-    COURSE("C", "讲师"),
-    TEACHER("T", "课程");
+    COURSE("C", "课程"),
+    TEACHER("T", "讲师");
 
     private String code;
 
@@ -31,5 +31,14 @@ public enum FileUseEnum {
 
     public String getDesc() {
         return desc;
+    }
+
+    public static FileUseEnum getByCode(String code){
+        for(FileUseEnum useEnum: FileUseEnum.values()){
+            if(code.equals(useEnum.getCode())){
+                return useEnum;
+            }
+        }
+        return null;
     }
 }
