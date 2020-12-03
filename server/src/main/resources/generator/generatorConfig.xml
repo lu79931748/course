@@ -22,9 +22,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/my_course?serverTimezone=UTC"
+                        connectionURL="jdbc:mysql://localhost:3306/my_course"
                         userId="root"
-                        password="root">
+                        password="luwenfei">
             <!--设置可以获取tables remarks信息-->
             <property name="useInformationSchema" value="true"/>
             <!--设置可以获取remarks信息-->
