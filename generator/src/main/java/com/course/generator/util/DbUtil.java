@@ -14,7 +14,7 @@ public class DbUtil {
         Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/my_course";
+            String url = "jdbc:mysql://localhost:3306/my_course?serverTimezone=GMT%2B8";
             String user = "root";
             String pass = "luwenfei";
             conn = DriverManager.getConnection(url, user, pass);
