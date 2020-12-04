@@ -31,6 +31,9 @@ public class UploadController {
     @Value("${file.path}")
     private String FILE_PATH;
 
+    @Value("${file.mac.path}")
+    private String FILE_MAC_PATH;
+
     @Resource
     private FileService fileService;
 
@@ -48,7 +51,7 @@ public class UploadController {
 
         //如果文件夹不存在则创建
         String dir = useEnum.name().toLowerCase();
-        File fullDir = new File(FILE_PATH + dir);
+        File fullDir = new File(getFilePath() + dir);
         if (!fullDir.exists()) {
             fullDir.mkdir();
         }
@@ -64,7 +67,7 @@ public class UploadController {
                 .append(".")
                 .append(fileDto.getShardIndex())
                 .toString(); // course\6sfSqfOwzmik4A4icMYuUe.mp4.1
-        String fullPath = FILE_PATH + localPath;
+        String fullPath = getFilePath() + localPath;
         File dest = new File(fullPath);
         shard.transferTo(dest);
         LOG.info(dest.getAbsolutePath());
@@ -88,7 +91,7 @@ public class UploadController {
         String path = fileDto.getPath(); //http://127.0.0.1:9000/file/f/course\6sfSqfOwzmik4A4icMYuUe.mp4
         path = path.replace(FILE_DOMAIN, ""); //course\6sfSqfOwzmik4A4icMYuUe.mp4
         Integer shardTotal = fileDto.getShardTotal();
-        File newFile = new File(FILE_PATH + path);
+        File newFile = new File(getFilePath() + path);
         FileOutputStream outputStream = new FileOutputStream(newFile, true);//文件追加写入
         FileInputStream fileInputStream = null;//分片文件
         byte[] byt = new byte[10 * 1024 * 1024];
@@ -97,7 +100,7 @@ public class UploadController {
         try {
             for (int i = 0; i < shardTotal; i++) {
                 // 读取第i个分片
-                fileInputStream = new FileInputStream(new File(FILE_PATH + path + "." + (i + 1))); //  course\6sfSqfOwzmik4A4icMYuUe.mp4.1
+                fileInputStream = new FileInputStream(new File(getFilePath() + path + "." + (i + 1))); //  course\6sfSqfOwzmik4A4icMYuUe.mp4.1
                 while ((len = fileInputStream.read(byt)) != -1) {
                     outputStream.write(byt, 0, len);
                 }
@@ -125,7 +128,7 @@ public class UploadController {
         // 删除分片
         LOG.info("删除分片开始");
         for (int i = 0; i < shardTotal; i++) {
-            String filePath = FILE_PATH + path + "." + (i + 1);
+            String filePath = getFilePath() + path + "." + (i + 1);
             File file = new File(filePath);
             boolean result = file.delete();
             LOG.info("删除{}，{}", filePath, result ? "成功" : "失败");
@@ -143,6 +146,15 @@ public class UploadController {
         }
         responseDto.setContent(fileDto);
         return responseDto;
+    }
+
+    private String getFilePath(){
+        String os = System.getProperty("os.name");
+        if (os.toLowerCase().startsWith("win")) {  //如果是Windows系统
+            return FILE_PATH;
+        } else {  //linux 和mac
+            return FILE_MAC_PATH;
+        }
     }
 
 }
