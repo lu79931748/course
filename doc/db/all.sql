@@ -40,6 +40,10 @@ CREATE TABLE `section` (
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
 VALUES ('00000001', '测试小节01', '00000001', '00000000', '', 500, 'F', 1, now(), now());
 
+ALTER TABLE `section` ADD COLUMN (
+  `vod` CHAR(32) COMMENT 'VOD|阿里云VOD'
+);
+
 drop table if exists `test`;
 create table `test` (
     id char(8) not null default '' comment 'id',
