@@ -220,7 +220,7 @@ export default {
        */
       save(page) {
         let _this = this;
-
+        _this.section.video = "";
         // 保存校验
         if (1 != 1
           || !Validator.require(_this.section.title, "标题")
@@ -266,6 +266,7 @@ export default {
       afterUpload(resp) {
         let _this = this;
         _this.section.video = resp.content.path;
+        _this.section.vod = resp.content.vod;
         _this.getTime();
        },
 
@@ -275,7 +276,7 @@ export default {
         setTimeout(function (){
           let ele = document.getElementById("video");
           _this.section.time = parseInt(ele.duration, 10);
-        }, 100)
+        }, 1000)
       }
 
     }

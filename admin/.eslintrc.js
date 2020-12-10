@@ -13,7 +13,11 @@ module.exports = {
         'no-undef': 'off',
         'vue/no-unused-vars': 'off',
         'vue/require-v-for-key': 'off',
-        'no-unused-vars': "off"
+        'no-unused-vars': "off",
+        "vue/no-unused-components": ["error", {
+            "ignoreWhenBindingPresent": true
+        }],
+
     },
     parserOptions: {
         parser: 'babel-eslint'

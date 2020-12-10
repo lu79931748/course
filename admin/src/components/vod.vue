@@ -4,9 +4,10 @@
             v-bind:suffixs="suffixs"
             v-bind:use="use"
             v-bind:after-upload="afterUpload"
-            v-bind:shard-size="shardSize"
-            v-bind:url="'oss-append'"></big-file>
+            v-bind:shard-size="1000 * 1024 * 1024"
+            v-bind:url="'vod'"></big-file>
 </template>
+<!--阿里云视频点播不支持追加上传，分片尽量大一些-->
 
 <script>
   import BigFile from "./big-file";
@@ -25,9 +26,6 @@
       },
       use: {
         default: ""
-      },
-      shardSize: {
-        default: 50 * 1024
       },
       afterUpload: {
         type: Function,
