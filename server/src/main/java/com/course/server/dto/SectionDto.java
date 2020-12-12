@@ -139,6 +139,13 @@ public class SectionDto {
         this.updatedAt = updatedAt;
     }
 
+    public String getVod() {
+        return vod;
+    }
+
+    public void setVod(String vod) {
+        this.vod = vod;
+    }
 
     @Override
     public String toString() {

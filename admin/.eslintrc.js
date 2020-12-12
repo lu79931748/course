@@ -16,7 +16,7 @@ module.exports = {
         'no-unused-vars': "off",
         "vue/no-unused-components": ["error", {
             "ignoreWhenBindingPresent": true
-        }],
+        },"off"],
 
     },
     parserOptions: {

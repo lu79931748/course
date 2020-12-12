@@ -38,7 +38,7 @@ public class SectionController {
     /**
      * 保存，id有值时更新，无值时新增
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public ResponseDto save(@RequestBody SectionDto sectionDto) {
         //保存校检
         ValidatorUtil.require(sectionDto.getTitle(), "标题");
