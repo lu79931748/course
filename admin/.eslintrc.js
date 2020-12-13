@@ -14,9 +14,7 @@ module.exports = {
         'vue/no-unused-vars': 'off',
         'vue/require-v-for-key': 'off',
         'no-unused-vars': "off",
-        "vue/no-unused-components": ["error", {
-            "ignoreWhenBindingPresent": true
-        },"off"],
+        "vue/no-unused-components": "off",
 
     },
     parserOptions: {
