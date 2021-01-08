@@ -1,14 +1,14 @@
 package com.course.business.controller.web;
 
 import com.course.server.dto.CourseDto;
+import com.course.server.dto.CoursePageDto;
 import com.course.server.dto.PageDto;
 import com.course.server.dto.ResponseDto;
+import com.course.server.enums.CourseStatusEnum;
 import com.course.server.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,6 +38,18 @@ public class CourseController {
         ResponseDto responseDto = new ResponseDto();
         List<CourseDto> courseDtoList = courseService.listNew(pageDto);
         responseDto.setContent(courseDtoList);
+        return responseDto;
+    }
+
+    /**
+     * 列表查询
+     */
+    @PostMapping("/list")
+    public ResponseDto list(@RequestBody CoursePageDto pageDto) {
+        ResponseDto responseDto = new ResponseDto();
+        pageDto.setStatus(CourseStatusEnum.PUBLISH.getCode());
+        courseService.list(pageDto);
+        responseDto.setContent(pageDto);
         return responseDto;
     }
 }

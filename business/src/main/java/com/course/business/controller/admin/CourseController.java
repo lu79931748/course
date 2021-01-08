@@ -28,7 +28,7 @@ public class CourseController {
      * 列表查询
      */
     @RequestMapping("/list")
-    public ResponseDto list(@RequestBody PageDto pageDto) {
+    public ResponseDto list(@RequestBody CoursePageDto pageDto) {
         //前端传入PageDto，后台服务给pageDto设置value，然后返回pageDto
         ResponseDto responseDto = new ResponseDto();
         courseService.list(pageDto);
