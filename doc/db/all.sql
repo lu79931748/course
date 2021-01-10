@@ -274,3 +274,4 @@ create table `role_user` (
 ) engine=innodb default charset=utf8mb4 comment='角色用户关联';
 
 insert into `role_user` values ('00000000', '00000000', '10000000');
+insert into `role_user` values ('00000001', '00000000', '9UwVioNM');
