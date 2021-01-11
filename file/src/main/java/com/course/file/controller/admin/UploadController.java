@@ -163,7 +163,6 @@ public class UploadController {
                 String fileUrl = response.getMezzanine().getFileURL();
                 fileDto.setPath(fileUrl);
             }
-            fileDto.setPath(FILE_DOMAIN + fileDto.getPath());
         }
         responseDto.setContent(fileDto);
         return responseDto;
