@@ -53,7 +53,7 @@
                       <tr v-for="(s, j) in chapter.sections" class="chapter-section-tr">
                         <td class="col-sm-8 col-xs-12">
                           <div class="section-title">
-                            <i class="fa fa-video-camera d-none d-sm-inline"></i>&nbsp;&nbsp;
+                            <i class="fa fa-video d-none d-sm-inline"></i>&nbsp;&nbsp;
                             <span class="d-none d-sm-inline">第{{j+1}}节&nbsp;&nbsp;</span>
                             {{s.title}}
                             <span v-show="s.charge !== SECTION_CHARGE.CHARGE.key" class="badge badge-primary hidden-xs">免费</span>
