@@ -224,7 +224,7 @@ create table `resource` (
   primary key (`id`)
 ) engine=innodb default charset=utf8 comment='资源';
 
-insert into `resource` values ('01', '系统管理', null, null, null);
+insert into `resource` values ('01', '系统管理', 'welcome', null, null);
 insert into `resource` values ('0101', '用户管理', '/system/user', null, '01');
 insert into `resource` values ('010101', '保存', null, '["/system/admin/user/list", "/system/admin/user/save"]', '0101');
 insert into `resource` values ('010102', '删除', null, '["/system/admin/user/delete"]', '0101');
@@ -234,6 +234,13 @@ insert into `resource` values ('010201', '保存/显示', null, '["/system/admin
 insert into `resource` values ('0103', '角色管理', '/system/role', null, '01');
 insert into `resource` values ('010301', '角色/权限管理', null, '["/system/admin/role"]', '0103');
 
+update resource r set `page` = 'system/role',
+                      `request` = '["/system/admin/user/list", "/system/admin/user/save", "/system/admin/user/delete", "/system/admin/user/save-password", "/system/admin/resource", "/system/admin/role"]'
+      where r.id = '01';
+
+#"business/category", "business/course", "business/chapter", "business/section", "business/content", "business/teacher","business/member", "file/file" "file/file"
+#, "/business/admin/category", "/business/admin/course", "/business/admin/category/all", "/business/admin/chapter", "/business/admin/section", "/business/admin/content", "/business/admin/teacher", "/business/admin/member", "/file/admin"
+#"system/user", "system/role"
 drop table if exists `role`;
 create table `role` (
   `id` char(8) not null default '' comment 'id',
@@ -275,12 +282,13 @@ create table `role_user` (
 
 insert into `role_user` values ('00000000', '00000000', '10000000');
 insert into `role_user` values ('00000001', '00000000', '9UwVioNM');
+insert into `role_user` values ('00000003', '00000000', 'yU1M7xIB');
 
 -- 会员
 drop table if exists `member`;
 create table `member` (
   `id` char(8) not null default '' comment 'id',
-  `mobile` varchar(11) comment '手机号',
+  `mobile` varchar(11) not null comment '手机号',
   `password` char(32) not null comment '密码',
   `name` varchar(50) comment '昵称',
   `photo` varchar(200) comment '头像url',
