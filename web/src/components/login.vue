@@ -224,7 +224,8 @@ export default {
           }
 
           // 登录成功 TODO
-
+          _this.$parent.setLoginMember(loginMember);
+          $("#login-modal").modal("hide");
 
         } else {
           Toast.warning(resp.message);
@@ -242,6 +243,7 @@ export default {
       _this.imageCodeToken = Tool.uuid(8);
       $('#image-code').attr('src', process.env.VUE_APP_SERVER + '/business/web/kaptcha/image-code/' + _this.imageCodeToken);
     },
+
   }
 }
 </script>
