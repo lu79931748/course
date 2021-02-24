@@ -13,7 +13,8 @@ import Content from "@/views/admin/content"
 import User from "@/views/admin/user";
 import Resource from "@/views/admin/resource";
 import Role from "@/views/admin/role";
-import Member from "./views/admin/member"
+import Member from "./views/admin/member";
+import Sms from "@/views/admin/sms";
 
 Vue.use(Router);
 
@@ -69,6 +70,10 @@ export default new Router({
             name: "business/member",
             component: Member,
         }, {
+            path: "business/sms",
+            name: "business/sms",
+            component: Sms,
+         }, {
             path: "file/file",
             name: "file/file",
             component: File,
