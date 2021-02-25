@@ -118,4 +118,14 @@ public class MemberService {
         }
     }
 
+    /**
+     * 检查手机号是否已经注册过
+     * @param mobile
+     * @return
+     */
+    public MemberDto findByMobile(String mobile) {
+        Member member = this.selectByMobile(mobile);
+        return CopyUtil.copy(member, MemberDto.class);
+    }
+
 }
