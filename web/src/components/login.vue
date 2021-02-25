@@ -50,7 +50,9 @@
             </div>
             <div class="form-group">
               <div class="input-group">
-                <input id="register-mobile-code" class="form-control"
+                <input v-on:blur="onRegisterMobileCodeBlur()"
+                       v-bind:class="registerMobileCodeValidateClass"
+                       id="register-mobile-code" class="form-control"
                        placeholder="手机验证码" v-model="memberRegister.code">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" id="register-send-code-btn"
@@ -58,19 +60,29 @@
                   </button>
                 </div>
               </div>
+              <span v-show="registerMobileCodeValidate === false" class="text-danger">请输入短信6位验证码</span>
             </div>
             <div class="form-group">
-              <input id="register-name" v-model="memberRegister.name"
+              <input v-on:blur="onRegisterNameBlur()"
+                     v-bind:class="registerNameValidateClass"
+                     id="register-name" v-model="memberRegister.name"
                      class="form-control" placeholder="昵称">
+              <span v-show="registerNameValidate === false" class="text-danger">昵称2到20位中文，字母，数字，下划线组合</span>
             </div>
             <div class="form-group">
-              <input id="register-password" v-model="memberRegister.passwordOriginal"
+              <input v-on:blur="onRegisterPasswordBlur()"
+                     v-bind:class="registerPasswordValidateClass"
+                     id="register-password" v-model="memberRegister.passwordOriginal"
                      class="form-control" placeholder="密码" type="password">
+              <span v-show="registerPasswordValidate === false" class="text-danger">密码最少6位，包含至少1字母和1个数字</span>
             </div>
             <div class="form-group">
-              <input id="register-confirm-password" v-model="memberRegister.confirm"
+              <input v-on:blur="onRegisterConfirmPasswordBlur()"
+                     v-bind:class="registerConfirmPasswordValidateClass"
+                     id="register-confirm-password" v-model="memberRegister.confirm"
                      class="form-control" placeholder="确认密码"
                      name="memberRegisterConfirm" type="password">
+              <span v-show="registerConfirmPasswordValidate === false" class="text-danger">确认密码和密码一致</span>
             </div>
             <div class="form-group">
               <button class="btn btn-primary btn-block submit-button" v-on:click="register()">
@@ -141,6 +153,10 @@ export default {
       imageCodeToken: "",
       // 注册框显示错误信息
       registerMobileValidate: null,
+      registerMobileCodeValidate: null,
+      registerPasswordValidate: null,
+      registerNameValidate: null,
+      registerConfirmPasswordValidate: null,
     }
   },
 
@@ -149,6 +165,30 @@ export default {
       return {
         'border-success': this.registerMobileValidate === true,
         'border-danger': this.registerMobileValidate === false,
+      }
+    },
+    registerMobileCodeValidateClass: function () {
+      return {
+        'border-success': this.registerMobileCodeValidate === true,
+        'border-danger': this.registerMobileCodeValidate === false,
+      }
+    },
+    registerPasswordValidateClass: function () {
+      return {
+        'border-success': this.registerPasswordValidate === true,
+        'border-danger': this.registerPasswordValidate === false,
+      }
+    },
+    registerNameValidateClass: function () {
+      return {
+        'border-success': this.registerNameValidate === true,
+        'border-danger': this.registerNameValidate === false,
+      }
+    },
+    registerConfirmPasswordValidateClass: function () {
+      return {
+        'border-success': this.registerConfirmPasswordValidate === true,
+        'border-danger': this.registerConfirmPasswordValidate === false,
       }
     },
   },
@@ -199,7 +239,7 @@ export default {
     },
 
     //---------------登录框-----------------
-    login () {
+    login() {
       let _this = this;
 
       // 将明文存储到缓存中
@@ -214,7 +254,7 @@ export default {
 
       _this.member.imageCodeToken = _this.imageCodeToken;
 
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/login', _this.member).then((response)=>{
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/login', _this.member).then((response) => {
         let resp = response.data;
         if (resp.success) {
           console.log("登录成功：", resp.content);
@@ -259,78 +299,105 @@ export default {
       $('#image-code').attr('src', process.env.VUE_APP_SERVER + '/business/web/kaptcha/image-code/' + _this.imageCodeToken);
     },
 
-      /**
-       * 发送注册短信
-       */
-      sendSmsForRegister() {
-        let _this = this;
-        if (!_this.onRegisterMobileBlur()) {
-          return false;
-        }
-        let sms = {
-          mobile: _this.memberRegister.mobile,
-          use: SMS_USE.REGISTER.key
-        };
+    /**
+     * 发送注册短信
+     */
+    sendSmsForRegister() {
+      let _this = this;
+      if (!_this.onRegisterMobileBlur()) {
+        return false;
+      }
+      let sms = {
+        mobile: _this.memberRegister.mobile,
+        use: SMS_USE.REGISTER.key
+      };
 
-        _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/is-mobile-exist/' + _this.memberRegister.mobile).then((res)=>{
-          let response = res.data;
-          if (response.success) {
-            Toast.warning("手机号已被注册");
-          } else {
-            // 调服务端发送短信接口
-            _this.sendSmsCode(sms, "register-send-code-btn");
-          }
-        })
-      },
-
-      /**
-       * 发送短信
-       */
-      sendSmsCode(sms, btnId) {
-        let _this = this;
-
-        // 调服务端发短信接口
-        _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/sms/send', sms).then((res)=> {
-          let response = res.data;
-          if (response.success) {
-            Toast.success("短信已发送")
-            // 开始倒计时
-            _this.countdown = 60;
-            _this.setTime(btnId);
-          } else {
-            Toast.warning(response.message);
-          }
-        })
-      },
-
-      /**
-       * 倒计时
-       * @param btnId
-       */
-      setTime(btnId) {
-        let _this = this;
-        let btn = $("#" + btnId);
-        if (_this.countdown === 0) {
-          btn.removeAttr("disabled");
-          btn.text("获取验证码");
-          return;
+      _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/is-mobile-exist/' + _this.memberRegister.mobile).then((res) => {
+        let response = res.data;
+        if (response.success) {
+          Toast.warning("手机号已被注册");
         } else {
-          btn.attr("disabled", true);
-          btn.text("重新发送(" + _this.countdown + ")");
-          _this.countdown--;
+          // 调服务端发送短信接口
+          _this.sendSmsCode(sms, "register-send-code-btn");
         }
-        setTimeout(function () {
+      })
+    },
+
+    /**
+     * 发送短信
+     */
+    sendSmsCode(sms, btnId) {
+      let _this = this;
+
+      // 调服务端发短信接口
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/sms/send', sms).then((res) => {
+        let response = res.data;
+        if (response.success) {
+          Toast.success("短信已发送")
+          // 开始倒计时
+          _this.countdown = 60;
           _this.setTime(btnId);
-        }, 1000);
-      },
+        } else {
+          Toast.warning(response.message);
+        }
+      })
+    },
 
-      //-------------------------------- 注册框校验 ----------------------------
+    /**
+     * 倒计时
+     * @param btnId
+     */
+    setTime(btnId) {
+      let _this = this;
+      let btn = $("#" + btnId);
+      if (_this.countdown === 0) {
+        btn.removeAttr("disabled");
+        btn.text("获取验证码");
+        return;
+      } else {
+        btn.attr("disabled", true);
+        btn.text("重新发送(" + _this.countdown + ")");
+        _this.countdown--;
+      }
+      setTimeout(function () {
+        _this.setTime(btnId);
+      }, 1000);
+    },
 
-      onRegisterMobileBlur () {
-        let _this = this;
-        _this.registerMobileValidate = Pattern.validateMobile(_this.memberRegister.mobile);
-        return _this.registerMobileValidate;
-      },
+    //-------------------------------- 注册框校验 ----------------------------
+
+    onRegisterMobileBlur() {
+      let _this = this;
+      _this.registerMobileValidate = Pattern.validateMobile(_this.memberRegister.mobile);
+      return _this.registerMobileValidate;
+    },
+
+    onRegisterMobileCodeBlur() {
+      let _this = this;
+      _this.registerMobileCodeValidate = Pattern.validateMobileCode(_this.memberRegister.code);
+      return _this.registerMobileValidate;
+    },
+
+    onRegisterNameBlur() {
+      let _this = this;
+      _this.registerNameValidate = Pattern.validateName(_this.memberRegister.name);
+      return _this.registerMobileValidate;
+    },
+
+    onRegisterPasswordBlur() {
+      let _this = this;
+      _this.registerPasswordValidate = Pattern.validatePasswordWeak(_this.memberRegister.passwordOriginal);
+      return _this.registerMobileValidate;
+    },
+
+    onRegisterConfirmPasswordBlur() {
+      let _this = this;
+      let confirmPassword = $("#register-confirm-password").val();
+      if (Tool.isEmpty(confirmPassword)) {
+        return _this.registerConfirmPasswordValidate = false;
+      }
+      return _this.registerConfirmPasswordValidate = (confirmPassword === _this.memberRegister.passwordOriginal);
+    },
 
   }
 }
