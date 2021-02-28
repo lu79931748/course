@@ -91,12 +91,14 @@ Tool = {
    */
   setLoginMember: function (loginMember) {
     SessionStorage.set(SESSION_KEY_LOGIN_MEMBER, loginMember);
+    console.log("保存登录信息", loginMember)
   },
 
   /**
    * 获取登录用户信息
    */
   getLoginMember: function () {
+    console.log("获取登录信息", SessionStorage.get(SESSION_KEY_LOGIN_MEMBER))
     return SessionStorage.get(SESSION_KEY_LOGIN_MEMBER) || {};
   },
 
