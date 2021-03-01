@@ -17,6 +17,10 @@ export default {
     }
   },
   methods: {
+    pause() {
+      let _this = this;
+      _this.aliPlayer.pause();
+    },
     playUrl(url) {
       let _this = this;
       console.log("开始播放:", url);
@@ -39,7 +43,7 @@ export default {
         console.log('播放器创建好了。')
       });
     },
-    playVod (vod) {
+    playVod(vod) {
       let _this = this;
       Loading.show();
       _this.$ajax.get(process.env.VUE_APP_SERVER + '/file/admin/get-auth/' + vod).then((response) => {

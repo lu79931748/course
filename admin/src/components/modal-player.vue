@@ -12,6 +12,7 @@
 </template>
 <script>
 import Player from "./player";
+
 export default {
   name: 'modal-player',
   components: {Player},
@@ -19,6 +20,13 @@ export default {
     return {
       aliPlayer: {}, // 播放器实例
     }
+  },
+  mounted() {
+    let _this = this;
+    // 当关闭模态框时，暂停播放
+    $('#player-modal').on('hidden.bs.modal', function (e) {
+      _this.$refs.player.pause();
+    })
   },
   methods: {
     playUrl(url) {
