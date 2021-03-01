@@ -1,21 +1,24 @@
 package com.course.system.controller;
 
-import com.course.server.domain.Test;
-import com.course.server.service.TestService;
+import com.course.server.dto.ResponseDto;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.util.List;
-
+@RefreshScope
 @RestController
+@RequestMapping("/test")
 public class TestController {
 
-    @Resource
-    private TestService testService;
+    @Value("${system.test}")
+    private String systemTest;
 
-    @RequestMapping("/test")
-    public List<Test> test() {
-        return testService.list();
+    @GetMapping("/list")
+    public ResponseDto list() {
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setContent(systemTest);
+        return responseDto;
     }
 }
