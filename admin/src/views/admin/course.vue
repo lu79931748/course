@@ -476,6 +476,8 @@ export default {
       afterUpload(resp) {
         let _this = this;
         _this.course.image = resp.content.path;
+        // 解决不能实时预览的问题
+        _this.$forceUpdate();
       },
 
     }

@@ -276,6 +276,8 @@ export default {
         _this.section.vod = resp.content.vod;
         _this.$refs.player.playUrl(resp.content.path);
         _this.getTime();
+        // 解决不能实时预览的问题
+        _this.$forceUpdate();
        },
 
 

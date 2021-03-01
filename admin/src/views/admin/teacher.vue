@@ -155,6 +155,10 @@
       add() {
         let _this = this;
         _this.teacher = {};
+        // 新增讲师，上传头像后不能实时预览，解决方法一
+        // _this.teacher = {
+        //   image: null
+        // };
         $("#form-modal").modal("show");
       },
 
@@ -238,6 +242,8 @@
         let _this = this;
         let image = resp.content.path;
         _this.teacher.image = image;
+        // 新增讲师，上传头像后不能实时预览，解决方法二
+        _this.$forceUpdate();
       },
 
     }
