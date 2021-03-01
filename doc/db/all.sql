@@ -224,7 +224,8 @@ create table `resource` (
   primary key (`id`)
 ) engine=innodb default charset=utf8 comment='资源';
 
-insert into `resource` values ('01', '系统管理', 'welcome', null, null);
+insert into `resource` values ('00', '欢迎', 'welcome', null, null);
+insert into `resource` values ('01', '系统管理', null, null, null);
 insert into `resource` values ('0101', '用户管理', '/system/user', null, '01');
 insert into `resource` values ('010101', '保存', null, '["/system/admin/user/list", "/system/admin/user/save"]', '0101');
 insert into `resource` values ('010102', '删除', null, '["/system/admin/user/delete"]', '0101');
@@ -234,9 +235,9 @@ insert into `resource` values ('010201', '保存/显示', null, '["/system/admin
 insert into `resource` values ('0103', '角色管理', '/system/role', null, '01');
 insert into `resource` values ('010301', '角色/权限管理', null, '["/system/admin/role"]', '0103');
 
-update resource r set `page` = 'system/role',
+/*update resource r set `page` = 'system/role',
                       `request` = '["/system/admin/user/list", "/system/admin/user/save", "/system/admin/user/delete", "/system/admin/user/save-password", "/system/admin/resource", "/system/admin/role"]'
-      where r.id = '01';
+      where r.id = '01';*/
 
 #"business/category", "business/course", "business/chapter", "business/section", "business/content", "business/teacher","business/member", "file/file" "file/file"
 #, "/business/admin/category", "/business/admin/course", "/business/admin/category/all", "/business/admin/chapter", "/business/admin/section", "/business/admin/content", "/business/admin/teacher", "/business/admin/member", "/file/admin"
@@ -261,6 +262,7 @@ create table `role_resource` (
   primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='角色资源关联';
 
+insert into `role_resource` values ('00000009', '00000000', '00');
 insert into `role_resource` values ('00000000', '00000000', '01');
 insert into `role_resource` values ('00000001', '00000000', '0101');
 insert into `role_resource` values ('00000002', '00000000', '010101');
