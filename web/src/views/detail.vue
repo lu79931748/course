@@ -167,7 +167,9 @@
         if (section.charge === _this.SECTION_CHARGE.CHARGE.key ) {
           let loginMember = Tool.getLoginMember();
           if (Tool.isEmpty(loginMember)) {
-            Toast.warning("请先登录");
+            //Toast.warning("请先登录");
+            // 触发打开登录窗口事件，用到事件总线
+            _this.$event.$emit("openLoginModal", "");
             return;
           } else {
             if (Tool.isEmpty(_this.memberCourse)) {
@@ -186,7 +188,8 @@
         let _this = this;
         let loginMember = Tool.getLoginMember();
         if (Tool.isEmpty(loginMember)) {
-          Toast.warning("请先登录");
+          //Toast.warning("请先登录");
+          _this.$event.$emit("openLoginModal", "");
           return;
         }
         _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member-course/enroll', {

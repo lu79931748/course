@@ -240,6 +240,12 @@ export default {
   mounted() {
     let _this = this;
     _this.toLoginDiv();
+
+    // 监听事件总线，openLoginModal事件
+    _this.$event.$on("openLoginModal", function (param) {
+      console.log(param);
+      _this.openLoginModal();
+    })
   },
   methods: {
 

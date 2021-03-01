@@ -7,6 +7,9 @@ import filter from "./filter/filter";
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios;
 
+//事件总线EventBus
+Vue.prototype.$event = new Vue();
+
 /**
  * axios拦截器
  */
