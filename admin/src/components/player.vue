@@ -43,7 +43,7 @@ export default {
         console.log('播放器创建好了。')
       });
     },
-    playVod(vod) {
+    playVod(vod, coverImage) {
       let _this = this;
       Loading.show();
       _this.$ajax.get(process.env.VUE_APP_SERVER + '/file/admin/get-auth/' + vod).then((response) => {
@@ -64,7 +64,7 @@ export default {
             autoplay: false,
             vid: vod,
             playauth: resp.content,
-            cover: 'http://liveroom-img.oss-cn-qingdao.aliyuncs.com/logo.png',
+            cover: coverImage,
             encryptType: 1, //当播放私有加密流时需要设置。
           }, function (player) {
             console.log('播放器创建好了。')

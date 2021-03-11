@@ -178,7 +178,7 @@
             }
           }
         }
-        _this.$refs.modalPlayer.playVod(section.vod);
+        _this.$refs.modalPlayer.playVod(section.vod, _this.course.image);
       },
 
       /**

@@ -295,7 +295,7 @@ export default {
        */
       play(section) {
         let _this = this;
-        _this.$refs.modalPlayer.playVod(section.vod);
+        _this.$refs.modalPlayer.playVod(section.vod, _this.course.image);
       }
 
     }

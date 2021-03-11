@@ -32,9 +32,9 @@ export default {
       _this.$refs.player.playUrl(url);
     },
 
-    playVod(vod) {
+    playVod(vod, coverImage) {
       let _this = this;
-      _this.$refs.player.playVod(vod);
+      _this.$refs.player.playVod(vod, coverImage);
       $("#player-modal").modal("show");
     }
   }
