@@ -29,9 +29,9 @@ export default {
     })
   },
   methods: {
-    playUrl(url) {
+    playUrl(url, coverImage) {
       let _this = this;
-      _this.$refs.player.playUrl(url);
+      _this.$refs.player.playUrl(url, coverImage);
     },
 
     playVod(vod, coverImage) {

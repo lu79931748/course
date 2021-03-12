@@ -21,7 +21,7 @@ export default {
       let _this = this;
       _this.aliPlayer.pause();
     },
-    playUrl(url) {
+    playUrl(url, coverImage) {
       let _this = this;
       console.log("开始播放:", url);
 
@@ -38,7 +38,7 @@ export default {
         width: '100%',
         autoplay: false,
         source: url,
-        cover: 'http://liveroom-img.oss-cn-qingdao.aliyuncs.com/logo.png',
+        cover: coverImage,
       }, function (player) {
         console.log('播放器创建好了。')
       });

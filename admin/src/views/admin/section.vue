@@ -274,7 +274,7 @@ export default {
         let _this = this;
         _this.section.video = resp.content.path;
         _this.section.vod = resp.content.vod;
-        _this.$refs.player.playUrl(resp.content.path);
+        _this.$refs.player.playUrl(resp.content.path, _this.course.image);
         _this.getTime();
         // 解决不能实时预览的问题
         _this.$forceUpdate();
