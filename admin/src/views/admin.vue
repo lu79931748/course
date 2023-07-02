@@ -586,7 +586,8 @@ export default {
           return false;
         }
         for (let i = 0; i < resources.length; i++) {
-          if (router === resources[i].page) {
+          if (resources[i].page.endsWith(router)) {
+            console.log("resources:", "有权限")
             return true;
           }
         }

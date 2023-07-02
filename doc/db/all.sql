@@ -212,6 +212,7 @@ create table `user` (
 ) engine=innodb default charset=utf8mb4 comment='用户';
 
 insert into `user` (id, login_name, name, password) values ('10000000', 'test1', '测试', '202cb962ac59075b964b07152d234b70');
+insert into `user` (id, login_name, name, password) values ('10000000', 'test', '测试', '8a08486b3cdc154f7f2105fb147e191a');
 
 -- 资源
 drop table if exists `resource`;
@@ -285,6 +286,7 @@ create table `role_user` (
 insert into `role_user` values ('00000000', '00000000', '10000000');
 insert into `role_user` values ('00000001', '00000000', '9UwVioNM');
 insert into `role_user` values ('00000003', '00000000', 'yU1M7xIB');
+insert into `role_user` values ('00000004', '00000000', '10000001');
 
 -- 会员
 drop table if exists `member`;
