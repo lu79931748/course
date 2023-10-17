@@ -46,7 +46,6 @@ public class VodUtil {
         request.setCateId(1000218883L);
         request.setTemplateGroupId("dd88474a82ae98604faafe7ce5af261d");
         //request.setWorkflowId("");
-        //request.setStorageLocation("");
         //request.setAppId("app-1000000");
         //设置请求超时时间
         request.setSysReadTimeout(1000);
